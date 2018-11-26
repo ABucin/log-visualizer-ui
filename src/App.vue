@@ -1,19 +1,28 @@
 <template>
-  <div id="app">
-    <b-container fluid>
-      <b-row>
-        <b-col class="col-2">
+  <div
+    id="app"
+    class="h-100"
+  >
+    <b-container
+      fluid
+      class="p-0 h-100"
+    >
+      <b-row class="p-0 m-0 h-100">
+        <b-col class="p-0 col-2 h-100">
           <b-nav
             vertical
+            class="lv-nav"
           >
-            <b-nav-item active>Visualize data</b-nav-item>
-            <b-nav-item>Generate reports
-              <font-awesome-icon icon="user-secret" />
+            <b-nav-item
+              v-for="item in menuItems"
+              :key="item.id"
+              class="lv-nav-item"
+            >{{ item.title }}
             </b-nav-item>
           </b-nav>
         </b-col>
         <b-col>
-          <router-view />
+          <router-view/>
         </b-col>
       </b-row>
     </b-container>
@@ -26,7 +35,7 @@
   import bRow from 'bootstrap-vue/es/components/layout/row';
   import bNav from 'bootstrap-vue/es/components/nav/nav';
   import bNavItem from 'bootstrap-vue/es/components/nav/nav-item';
-  import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+  import menuItems from "@/data/menuItems";
 
   export default {
     name: 'App',
@@ -36,18 +45,40 @@
       bRow,
       bNav,
       bNavItem,
-      FontAwesomeIcon,
-    }
+    },
+    data() {
+      return {
+        menuItems,
+      };
+    },
   }
 </script>
 
-<style>
+<style lang="scss">
+  @import "~@/assets/scss/mixins.scss";
+  @import "~@/assets/scss/variables.scss";
+
+  html, body {
+    height: 100%;
+  }
+
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: $font-family;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    color: $blue-22;
+  }
+
+  .lv-nav {
+    background-color: $blue-22;
+    height: 100%;
+
+    .lv-nav-item {
+      a {
+        color: $blue-95;
+
+        @include lv-link($blue-95)
+      }
+    }
   }
 </style>

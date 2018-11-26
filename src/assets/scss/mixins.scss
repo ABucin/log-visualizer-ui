@@ -1,0 +1,6 @@
+@mixin lv-link($color) {
+  &:hover {
+    cursor: pointer;
+    color: darken($color, 30);
+  }
+}

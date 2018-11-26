@@ -14,8 +14,7 @@ export default {
   @import "~@/assets/scss/variables.scss";
 
 h3 {
-  margin: 40px 0 0;
-  color: $red;
+  color: $blue;
 }
 ul {
   list-style-type: none;
