@@ -22,7 +22,7 @@
           </b-nav>
         </b-col>
         <b-col>
-          <router-view/>
+          <router-view />
         </b-col>
       </b-row>
     </b-container>
@@ -76,6 +76,7 @@
     .lv-nav-item {
       a {
         color: $blue-95;
+        font-size: $font-size-menu;
 
         @include lv-link($blue-95)
       }
