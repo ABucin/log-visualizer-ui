@@ -22,7 +22,7 @@
           </b-nav>
         </b-col>
         <b-col>
-          <router-view />
+          <router-view name="main" />
         </b-col>
       </b-row>
     </b-container>

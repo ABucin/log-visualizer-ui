@@ -1,17 +1,30 @@
 <template>
-  <div>
+  <div class="p-2">
     <h3>Visualize Data</h3>
-    <lv-line-chart />
+    <lv-bar-chart
+      :items="chartData"
+      :title="chartTitle"
+    />
   </div>
 </template>
 
 <script>
   import LvBarChart from './charts/lvBarChart';
+  import statusCodes from "@/data/statusCodes";
 
   export default {
     name: 'VisualizeData',
     components: {
-      LvLineChart: LvBarChart,
+      LvBarChart,
+    },
+    data() {
+      return {
+        chartData: [],
+        chartTitle: 'HTTP status codes',
+      };
+    },
+    mounted() {
+      this.chartData = statusCodes.sort((a, b) => a.text - b.text);
     },
   }
 </script>

@@ -2,11 +2,13 @@ import VisualizeData from './components/VisualizeData.vue';
 import VueRouter from "vue-router";
 
 const routes = [
-	{
-		path: '/',
-		name: 'VisualizeData',
-		component: VisualizeData,
-	},
+  {
+    path: '/',
+    name: 'VisualizeData',
+    components: {
+      main: VisualizeData,
+    },
+  },
 ];
 
 const router = new VueRouter({

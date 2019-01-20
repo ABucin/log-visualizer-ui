@@ -1,59 +1,142 @@
 <template>
   <div>
     <h6>{{ title }}</h6>
-    <svg id="line-chart" />
+    <svg id="bar-chart" />
   </div>
 </template>
 
 <script>
   import * as d3 from 'd3';
   import {scaleLinear} from 'd3-scale';
-  import statusCodes from "@/data/statusCodes";
 
   export default {
-    name: "LvLineChart",
+    name: "LvBarChart",
+    props: {
+      /**
+       * Horizontal bar height, in pixels.
+       */
+      barHeight: {
+        type: Number,
+        default: 25,
+      },
+      items: {
+        type: Array,
+        default: () => ([]),
+      },
+      /**
+       * Chart padding, in pixels.
+       */
+      padding: {
+        type: Number,
+        default: 30,
+      },
+      title: {
+        type: String,
+        default: '',
+      },
+      /**
+       * Chart width, in pixels.
+       */
+      width: {
+        type: Number,
+        default: 500,
+      },
+    },
     data() {
       return {
-        barColor: '4a667b',
-        barHeight: 20,
+        barChart: {},
+        barCssClass: 'lv-chart-bar',
         chart: null,
-        title: 'HTTP status codes',
-        values: statusCodes,
-        width: 500,
+        colors: ['#ff7657', '#ffba5a', '#005792', '#a6aa9c', '#be3737', '#57a99a', '#774898', '#5c8d89'],
+        container: '#bar-chart',
       };
     },
+    computed: {
+      barCount() {
+        return this.items.length;
+      },
+      height() {
+        return this.barHeight * this.barCount;
+      },
+      paddingLeft() {
+        return this.padding;
+      },
+      paddingRight() {
+        return this.paddingLeft + 50;
+      },
+      xScaleDomain() {
+        const mappedValues = this.items.map(v => v.value);
+
+        return [0, d3.max(mappedValues)];
+      },
+      xScaleRange() {
+        return [0, this.width - this.paddingRight];
+      }
+    },
     mounted() {
-      this.chart = d3.select('#line-chart')
-        .attr('width', this.width)
-        .attr('height', this.barHeight * this.values.length);
+      const vm = this;
 
-      const mappedValues = this.values.map(v => v.value);
+      vm.$nextTick()
+        .then(() => vm.init());
+    },
+    methods: {
+      init() {
+        this.chart = d3.select(this.container)
+          .attr('width', this.width)
+          .attr('height', this.height);
 
-      const x = scaleLinear()
-        .domain([0, d3.max(mappedValues)])
-        .rangeRound([0, this.width - 20]);
+        const xScale = scaleLinear()
+          .domain(this.xScaleDomain)
+          // add some padding on the right so that labels can fit inside the chart container
+          .rangeRound(this.xScaleRange);
 
-      const barChart = this.chart
-        .selectAll('g')
-        .data(this.values)
-        .enter()
-        .append('g')
-        .attr('transform', (d, i) => `translate(0, ${i * this.barHeight})`);
+        this.barChart = this.chart
+          .selectAll('g')
+          .data(this.items)
+          .enter()
+          .append('g')
+          .attr('transform', (d, i) => `translate(${this.paddingLeft}, ${i * this.barHeight})`);
 
-      barChart.append('rect')
-        .attr('class', 'lv-chart-bar')
-        .style('fill', this.barColor)
-        .style('width', (d) => x(d.value))
-        .style('height', this.barHeight - 1);
+        // set chart bars
+        this.setBars(xScale);
+        // set bar X-axis text (i.e. bar domain value)
+        this.setXAxisText();
+        // set bar Y-axis text (i.e. bar range value)
+        this.setYAxisText(xScale);
+      },
+      setBars(xScale) {
+        this.barChart.append('rect')
+          .attr('class', this.barCssClass)
+          // compute bar color based on provided color scheme and bar index
+          .style('fill', (d, i) => this.colors[i % this.colors.length])
+          .style('width', (d) => xScale(d.value))
+          .style('height', this.barHeight - 3);
+      },
+      setXAxisText() {
+        // offset relative to bar start, in pixels
+        const offset = -this.paddingLeft;
 
-      barChart.append('text')
-        .attr('x', 10)
-        .attr('y', this.barHeight / 2)
-        .attr('dy', '.35em')
-        .attr('text-anchor', 'start')
-        .attr('class', 'lv-chart-label')
-        .text(d => d.text);
-    }
+        this.barChart.append('text')
+          .attr('x', offset)
+          .attr('y', this.barHeight / 2)
+          .attr('dy', '.35em')
+          .attr('text-anchor', 'start')
+          .attr('class', 'lv-chart-label')
+          .text(d => d.text);
+      },
+      setYAxisText(xScale) {
+        // offset relative to bar end, in pixels
+        const offset = 10;
+
+        this.barChart.append('text')
+          .attr('x', d => xScale(d.value) + offset)
+          .attr('y', this.barHeight / 2)
+          .attr('dy', '.35em')
+          .attr('text-anchor', 'start')
+          .attr('class', 'lv-chart-label')
+          .text(d => d.value);
+      },
+    },
   }
 </script>
 
@@ -65,11 +148,11 @@
   }
 
   .lv-chart-bar {
-
+    cursor: pointer;
   }
 
   .lv-chart-label {
-    fill: $blue-95;
+    fill: $blue-38;
     font-size: 12px;
     font-weight: 400;
   }
