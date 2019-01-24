@@ -7,11 +7,20 @@
       fluid
       class="p-0 h-100"
     >
-      <b-row class="p-0 m-0 h-100">
-        <b-col class="p-0 col-2 h-100">
+      <b-row class="no-gutters sticky-top">
+        <b-col>
+          <b-nav class="lv-nav">
+            <b-nav-item>
+              Visualize data
+            </b-nav-item>
+          </b-nav>
+        </b-col>
+      </b-row>
+      <b-row class="m-0 p-0 h-100">
+        <b-col class="p-0 col-auto">
           <b-nav
             vertical
-            class="lv-nav"
+            class="lv-nav-vertical"
           >
             <b-nav-item
               v-for="item in menuItems"
@@ -21,7 +30,7 @@
             </b-nav-item>
           </b-nav>
         </b-col>
-        <b-col>
+        <b-col class="col-auto lv-content">
           <router-view name="main" />
         </b-col>
       </b-row>
@@ -70,6 +79,11 @@
   }
 
   .lv-nav {
+    background-color: $blue-22;
+    font-size: 12px;
+  }
+
+  .lv-nav-vertical {
     background-color: $blue-22;
     height: 100%;
 

@@ -1,6 +1,5 @@
 <template>
   <div class="p-2">
-    <h3>Visualize Data</h3>
     <lv-bar-chart
       :items="chartData"
       :title="chartTitle"

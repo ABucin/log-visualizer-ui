@@ -8,6 +8,7 @@
 <script>
   import * as d3 from 'd3';
   import {scaleLinear} from 'd3-scale';
+  import {onDataHover} from "@/components/charts/chartUtils";
 
   export default {
     name: "LvBarChart",
@@ -47,7 +48,7 @@
         barChart: {},
         barCssClass: 'lv-chart-bar',
         chart: null,
-        colors: ['#ff7657', '#ffba5a', '#005792', '#a6aa9c', '#be3737', '#57a99a', '#774898', '#5c8d89'],
+        colors: ['#ff7657', '#ffba5a', '#005792', '#a6aa9c', '#be3737', '#57a99a', '#774898', '#448ef6'],
         container: '#bar-chart',
       };
     },
@@ -56,7 +57,7 @@
         return this.items.length;
       },
       height() {
-        return this.barHeight * this.barCount;
+        return this.barHeight * this.barCount + 25;
       },
       paddingLeft() {
         return this.padding;
@@ -85,24 +86,24 @@
           .attr('width', this.width)
           .attr('height', this.height);
 
-        const xScale = scaleLinear()
+        const x = scaleLinear()
           .domain(this.xScaleDomain)
           // add some padding on the right so that labels can fit inside the chart container
           .rangeRound(this.xScaleRange);
 
         this.barChart = this.chart
-          .selectAll('g')
+          .selectAll('.bar')
           .data(this.items)
           .enter()
           .append('g')
-          .attr('transform', (d, i) => `translate(${this.paddingLeft}, ${i * this.barHeight})`);
+          .attr('transform', (d, i) => `translate(${this.paddingLeft}, ${i * this.barHeight})`)
+          .attr('class', 'bar');
 
         // set chart bars
-        this.setBars(xScale);
-        // set bar X-axis text (i.e. bar domain value)
-        this.setXAxisText();
+        this.setBars(x);
+        this.setXAxis(x);
         // set bar Y-axis text (i.e. bar range value)
-        this.setYAxisText(xScale);
+        this.setYAxisText(x);
       },
       setBars(xScale) {
         this.barChart.append('rect')
@@ -110,7 +111,27 @@
           // compute bar color based on provided color scheme and bar index
           .style('fill', (d, i) => this.colors[i % this.colors.length])
           .style('width', (d) => xScale(d.value))
-          .style('height', this.barHeight - 3);
+          .style('height', this.barHeight - 3)
+          .on('mouseover', (d, i, nodes) => {
+            onDataHover(d3.select(nodes[i]));
+          })
+          .on('mouseout', (d, i, nodes) => {
+            onDataHover(d3.select(nodes[i]), true);
+          });
+      },
+      setXAxis(xScale) {
+        const xAxis = d3.axisBottom(xScale);
+
+        this.chart.append('g')
+          .attr('transform', `translate(${this.paddingLeft}, ${this.height - 20})`)
+          .attr('class', 'x axis');
+
+        this.chart.select('.x.axis')
+          .transition()
+          .call(xAxis);
+
+        // set bar X-axis text (i.e. bar domain value)
+        this.setXAxisText();
       },
       setXAxisText() {
         // offset relative to bar start, in pixels

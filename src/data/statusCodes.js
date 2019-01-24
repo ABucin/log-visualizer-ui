@@ -19,6 +19,12 @@ const statusCodes = [{
 }, {
   text: '307',
   value: 6
+}, {
+  text: '201',
+  value: 7
+}, {
+  text: '503',
+  value: 1
 }];
 
 export default statusCodes;
