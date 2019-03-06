@@ -10,8 +10,8 @@
       <b-row class="no-gutters sticky-top">
         <b-col>
           <b-nav class="lv-nav">
-            <b-nav-item>
-              Visualize data
+            <b-nav-item class="lv-nav-item">
+              Server log visualiser
             </b-nav-item>
           </b-nav>
         </b-col>
@@ -20,14 +20,15 @@
         <b-col class="p-0 col-auto">
           <b-nav
             vertical
-            class="lv-nav-vertical"
+            class="lv-nav-vertical d-flex align-items-start flex-column"
           >
             <b-nav-item
               v-for="item in menuItems"
               :key="item.id"
-              class="lv-nav-item"
+              class="lv-nav-item w-100"
             >{{ item.title }}
             </b-nav-item>
+            <b-nav-item class="lv-nav-item lv-version text-center mt-auto align-self-center">v0.1</b-nav-item>
           </b-nav>
         </b-col>
         <b-col class="col-auto lv-content">
@@ -78,22 +79,31 @@
     color: $blue-22;
   }
 
+  .card {
+    box-shadow: 0 1px 2px 0 #d8d8d8;
+    margin: 5px !important;
+  }
+
   .lv-nav {
     background-color: $blue-22;
     font-size: 12px;
   }
 
+  .lv-nav-item {
+    a {
+      color: $blue-85;
+      font-size: $font-size-menu;
+
+      @include lv-link($blue-85, $blue-22, 30%)
+    }
+  }
+
   .lv-nav-vertical {
     background-color: $blue-22;
     height: 100%;
+  }
 
-    .lv-nav-item {
-      a {
-        color: $blue-95;
-        font-size: $font-size-menu;
-
-        @include lv-link($blue-95)
-      }
-    }
+  .lv-version {
+    font-size: $font-size-small;
   }
 </style>

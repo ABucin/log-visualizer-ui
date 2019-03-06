@@ -1,19 +1,27 @@
 <template>
   <div class="p-2">
-    <lv-bar-chart
-      :items="chartData"
-      :title="chartTitle"
-    />
+    <b-card-group deck>
+      <b-card>
+        <lv-bar-chart
+          :items="chartData"
+          :title="chartTitle"
+        />
+      </b-card>
+    </b-card-group>
   </div>
 </template>
 
 <script>
   import LvBarChart from './charts/lvBarChart';
   import statusCodes from "@/data/statusCodes";
+  import bCard from 'bootstrap-vue/es/components/card/card';
+  import bCardGroup from 'bootstrap-vue/es/components/card/card-group';
 
   export default {
     name: 'VisualizeData',
     components: {
+      bCard,
+      bCardGroup,
       LvBarChart,
     },
     data() {

@@ -3,9 +3,12 @@ const menuItems = [{
   title: 'Visualize data'
 }, {
   id: 2,
-  title: 'Generate reports'
+  title: 'Visualize logs'
 }, {
   id: 3,
+  title: 'Generate reports'
+}, {
+  id: 4,
   title: 'Configuration'
 }];
 

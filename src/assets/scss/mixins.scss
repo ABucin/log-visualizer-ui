@@ -1,6 +1,19 @@
-@mixin lv-link($color) {
+@mixin lv-link($color: transparent, $background-color: transparent, $color-factor: -30%, $background-color-factor: -30%) {
   &:hover {
     cursor: pointer;
-    color: darken($color, 30);
+
+    @if $color-factor < 0 {
+      color: darken($color, abs($color-factor));
+    } @else {
+      color: lighten($color, abs($color-factor));
+    }
+
+    @if variable-exists(background-color) {
+      @if $background-color-factor < 0 {
+        background-color: darken($background-color, abs($background-color-factor) / 5);
+      } @else {
+        background-color: lighten($background-color, abs($background-color-factor) / 5);
+      }
+    }
   }
 }
