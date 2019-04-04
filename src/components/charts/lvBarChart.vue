@@ -77,7 +77,7 @@
         return this.items.length;
       },
       height() {
-        return this.barHeight * this.barCount + 25;
+        return this.barHeight * this.barCount;
       },
       paddingLeft() {
         return this.padding;
@@ -202,7 +202,7 @@
     }
 
     .lv-chart-label {
-      fill: $blue-38;
+      fill: $blue-40;
       font-family: $font-family-chart;
       font-size: 12px;
       font-weight: 400;

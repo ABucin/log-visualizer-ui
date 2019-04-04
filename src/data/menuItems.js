@@ -10,6 +10,9 @@ const menuItems = [{
 }, {
   id: 4,
   title: 'Configuration'
+}, {
+  id: 5,
+  title: 'Water plants'
 }];
 
 export default menuItems;

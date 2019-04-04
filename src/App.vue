@@ -9,18 +9,18 @@
     >
       <b-row class="no-gutters sticky-top">
         <b-col>
-          <b-nav class="lv-nav">
+          <b-nav class="lv-nav lv-nav--horizontal">
             <b-nav-item class="lv-nav-item">
-              Server log visualiser
+              SERVER LOG VIS
             </b-nav-item>
           </b-nav>
         </b-col>
       </b-row>
-      <b-row class="m-0 p-0 h-100">
+      <b-row class="m-0 p-0 lv-content-container">
         <b-col class="p-0 col-auto">
           <b-nav
             vertical
-            class="lv-nav-vertical d-flex align-items-start flex-column"
+            class="lv-nav lv-nav--vertical d-flex align-items-start flex-column"
           >
             <b-nav-item
               v-for="item in menuItems"
@@ -76,7 +76,7 @@
     font-family: $font-family;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: $blue-22;
+    color: $blue-20;
   }
 
   .card {
@@ -84,26 +84,43 @@
     margin: 5px !important;
   }
 
+  .lv-content-container {
+    height: calc(100% - 34px);
+  }
+
   .lv-nav {
-    background-color: $blue-22;
-    font-size: 12px;
-  }
+    &.lv-nav--vertical {
+      background-color: $blue-20;
+      height: 100%;
 
-  .lv-nav-item {
-    a {
-      color: $blue-85;
-      font-size: $font-size-menu;
+      .lv-nav-item {
+        a {
+          color: $blue-85;
+          font-size: $font-size-menu;
 
-      @include lv-link($blue-85, $blue-22, 30%)
+          @include lv-link($blue-85, $blue-20, 30%)
+        }
+      }
     }
-  }
 
-  .lv-nav-vertical {
-    background-color: $blue-22;
-    height: 100%;
+    &.lv-nav--horizontal {
+      background-color: $blue-30;
+      border-bottom: 1px solid $blue-40;
+      font-size: 12px;
+
+      .lv-nav-item {
+        a {
+          color: $blue-95;
+          font-size: 12px;
+          padding-bottom: 8px;
+          padding-top: 8px;
+        }
+      }
+    }
   }
 
   .lv-version {
     font-size: $font-size-small;
+    width: 100%;
   }
 </style>
