@@ -26,9 +26,16 @@
               v-for="item in menuItems"
               :key="item.id"
               class="lv-nav-item w-100"
-            >{{ item.title }}
+            >
+              <font-awesome-icon
+                :icon="item.icon.split(' ')"
+                class="mr-3"
+              />
+              {{ item.title }}
             </b-nav-item>
-            <b-nav-item class="lv-nav-item lv-version text-center mt-auto align-self-center">v0.1</b-nav-item>
+            <b-nav-item class="lv-nav-item lv-version text-center mt-auto align-self-center">
+              v0.1
+            </b-nav-item>
           </b-nav>
         </b-col>
         <b-col class="col-auto lv-content">
@@ -45,7 +52,13 @@
   import bRow from 'bootstrap-vue/es/components/layout/row';
   import bNav from 'bootstrap-vue/es/components/nav/nav';
   import bNavItem from 'bootstrap-vue/es/components/nav/nav-item';
+  import {faClipboardList, faCog, faDatabase, faListAlt} from '@fortawesome/free-solid-svg-icons';
+  import {library as fontAwesome} from '@fortawesome/fontawesome-svg-core';
   import menuItems from "@/data/menuItems";
+
+  const icons = [faClipboardList, faCog, faDatabase, faListAlt];
+
+  fontAwesome.add(...icons);
 
   export default {
     name: 'App',
@@ -85,7 +98,7 @@
   }
 
   .lv-content-container {
-    height: calc(100% - 34px);
+    height: calc(100% - 35px);
   }
 
   .lv-nav {

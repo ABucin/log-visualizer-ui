@@ -3,11 +3,9 @@
     <h6 class="mb-3 text-center">{{ title }}</h6>
     <span class="lv-chart-options d-flex align-items-center">
       <font-awesome-icon
-        :icon="['fas', 'sync-alt']"
-        class="lv-chart-icon ml-2"
-      />
-      <font-awesome-icon
-        :icon="['fas', 'cog']"
+        v-for="icon in icons"
+        :key="icon"
+        :icon="['fas', icon]"
         class="lv-chart-icon ml-2"
       />
     </span>
@@ -20,10 +18,10 @@
   import {scaleLinear} from 'd3-scale';
   import {onDataHover} from "@/components/charts/chartUtils";
   import {library as fontAwesome} from '@fortawesome/fontawesome-svg-core';
-  import {faCog, faSyncAlt} from '@fortawesome/free-solid-svg-icons';
+  import {faCog, faFilter, faSortAlphaDown, faSyncAlt} from '@fortawesome/free-solid-svg-icons';
   import * as uuid from 'uuid';
 
-  const icons = [faCog, faSyncAlt];
+  const icons = [faCog, faFilter, faSortAlphaDown, faSyncAlt];
 
   fontAwesome.add(...icons);
 
@@ -70,6 +68,7 @@
         barCssClass: 'lv-chart-bar',
         chart: null,
         colors: ['#ff7657', '#ffba5a', '#005792', '#a6aa9c', '#be3737', '#57a99a', '#774898', '#448ef6'],
+        icons: [ 'sync-alt', 'filter', 'sort-alpha-down', 'cog'],
       };
     },
     computed: {
