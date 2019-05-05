@@ -9,3 +9,7 @@ export function onDataHover(selection, lighten) {
   // cannot use 'this' due to arrow function syntax
   selection.style('fill', finalFill);
 }
+
+export function toggleTooltip(show) {
+
+}

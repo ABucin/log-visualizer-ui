@@ -3,8 +3,14 @@
     <b-card-group deck>
       <b-card>
         <lv-bar-chart
-          :items="chartData"
-          :title="chartTitle"
+          :items="barChartData"
+          :title="barChartTitle"
+        />
+      </b-card>
+      <b-card>
+        <lv-donut-chart
+          :items="donutChartData"
+          :title="donutChartTitle"
         />
       </b-card>
     </b-card-group>
@@ -12,7 +18,9 @@
 </template>
 
 <script>
-  import LvBarChart from './charts/lvBarChart';
+  import LvBarChart from '@/components/charts/lvBarChart';
+  import LvDonutChart from '@/components/charts/lvDonutChart';
+  import messageTypes from "@/data/messageTypes";
   import statusCodes from "@/data/statusCodes";
   import bCard from 'bootstrap-vue/es/components/card/card';
   import bCardGroup from 'bootstrap-vue/es/components/card/card-group';
@@ -23,15 +31,19 @@
       bCard,
       bCardGroup,
       LvBarChart,
+      LvDonutChart,
     },
     data() {
       return {
-        chartData: [],
-        chartTitle: 'HTTP status codes',
+        barChartData: [],
+        barChartTitle: 'HTTP status codes',
+        donutChartData: [],
+        donutChartTitle: 'Log message types',
       };
     },
     mounted() {
-      this.chartData = statusCodes.sort((a, b) => a.text - b.text);
+      this.barChartData = statusCodes.sort((a, b) => a.text - b.text);
+      this.donutChartData = messageTypes.sort((a, b) => a.text - b.text);
     },
   }
 </script>

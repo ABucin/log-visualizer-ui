@@ -11,7 +11,7 @@
         <b-col>
           <b-nav class="lv-nav lv-nav--horizontal">
             <b-nav-item class="lv-nav-item">
-              SERVER LOG VIS
+              SERVER LOG VISUALIZER
             </b-nav-item>
           </b-nav>
         </b-col>

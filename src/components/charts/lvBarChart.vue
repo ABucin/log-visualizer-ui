@@ -1,14 +1,7 @@
 <template>
   <div class="lv-chart-container">
     <h6 class="mb-3 text-center">{{ title }}</h6>
-    <span class="lv-chart-options d-flex align-items-center">
-      <font-awesome-icon
-        v-for="icon in icons"
-        :key="icon"
-        :icon="['fas', icon]"
-        class="lv-chart-icon ml-2"
-      />
-    </span>
+    <lv-chart-options />
     <svg :id="id" />
   </div>
 </template>
@@ -17,16 +10,12 @@
   import * as d3 from 'd3';
   import {scaleLinear} from 'd3-scale';
   import {onDataHover} from "@/components/charts/chartUtils";
-  import {library as fontAwesome} from '@fortawesome/fontawesome-svg-core';
-  import {faCog, faFilter, faSortAlphaDown, faSyncAlt} from '@fortawesome/free-solid-svg-icons';
   import * as uuid from 'uuid';
-
-  const icons = [faCog, faFilter, faSortAlphaDown, faSyncAlt];
-
-  fontAwesome.add(...icons);
+  import LvChartOptions from "@/components/charts/lvChartOptions";
 
   export default {
     name: "LvBarChart",
+    components: {LvChartOptions},
     props: {
       /**
        * Horizontal bar height, in pixels.
@@ -67,8 +56,16 @@
         barChart: {},
         barCssClass: 'lv-chart-bar',
         chart: null,
-        colors: ['#ff7657', '#ffba5a', '#005792', '#a6aa9c', '#be3737', '#57a99a', '#774898', '#448ef6'],
-        icons: [ 'sync-alt', 'filter', 'sort-alpha-down', 'cog'],
+        colors: [
+          '#ff7657',
+          '#ffba5a',
+          '#005792',
+          '#a6aa9c',
+          '#be3737',
+          '#57a99a',
+          '#774898',
+          '#448ef6'
+        ],
       };
     },
     computed: {
@@ -187,17 +184,6 @@
 
     .lv-chart-bar {
       cursor: pointer;
-    }
-
-    .lv-chart-options {
-      color: $blue;
-      position: absolute;
-      right: 0;
-      top: 0;
-
-      .lv-chart-icon {
-        @include lv-link($blue, transparent, 15%)
-      }
     }
 
     .lv-chart-label {
